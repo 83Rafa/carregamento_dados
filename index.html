@@ -1,0 +1,945 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Modelos de Fontes de Base de Dados</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="618f38ef-dd10-44a9-984f-8aa941407124" class="page sans"><header><img class="page-cover-image" src="img/bases-de-dados.jpeg" style="object-position:center 50%"/><h1 class="page-title"><strong>Modelos de Fontes de Base de Dados</strong></h1><p class="page-description"></p></header><div class="page-body"><p id="9d502bc3-5fcb-4de3-ac8e-be4393c5f53d" class="">Como cientista de dados você não precisa decorar cada linha de código para realizar sua análise ou modelagem, só precisa saber onde as informações estão para quando precisar. </p><p id="5b7ce796-b7cf-4496-93ed-2e3a4d32f42e" class="">Embora com o tempo algumas linhas de código acabam se fixando na memória automaticamente, tenho sempre uma colinha de fácil acesso.</p><p id="7287dbe4-44da-4f97-9f0d-fa69299572a4" class="">No meu caso, <mark class="highlight-orange"><span style="border-bottom:0.05em solid"><strong>Python</strong></span></mark> é de longe a ferramenta que mais uso, mas para algumas análises acabo utilizando o <mark class="highlight-blue"><strong><span style="border-bottom:0.05em solid">R</span></strong></mark><strong> </strong>também. Esse arquivo contém exemplos de carregamento de dados em Python e em R, espero que lhe seja útil!</p><ul id="55cf1c98-99db-4f9a-994b-983fd08fde6b" class="toggle"><li><details open=""><summary><strong>Base de Dados Locais</strong></summary><p id="f258fcf3-b99e-43ba-9f82-033a3bf4e041" class="">Começando pelo básico, os arquivos <em>.csv não </em>possuem muitos parâmetros, mas alguns podem ser fundamentais para carregar sua base, como separadores, idioma e índices. Outra coisa, no caso do Python é  sempre bom se lembrar de em arquivos muito grandes que venham em formato compactado não há necessidade de descompactar na sua máquina, basta fazer a leitura em formato ‘zipado’: <mark class="highlight-gray_background"><em>pd.read_csv(“arquivo.zip”)</em></mark><mark class="highlight-default"> que o arquivo ficara salvo apenas na memória cache da ferramenta.</mark></p><p id="10e74ce2-5fac-45e0-8013-06fe3b312df7" class=""><strong><mark class="highlight-orange">Python</mark></strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="37321e78-90bd-425a-841c-fb6164f94af9" class="code"><code class="language-Python">import pandas as pd
+
+# Carrega dados de um arquivo CSV
+df_csv = pd.read_csv(&#x27;arquivo.csv&#x27;, sep=&#x27;;&#x27;)
+
+df_csv.head()</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c0b7f785-3f3a-41dc-878f-dec555bd776a" class="code"><code class="language-Python">import pandas as pd
+
+# Carrega dados de uma planilha Excel
+df_excel = pd.read_excel(&#x27;arquivo.xlsx&#x27;, sep=&#x27;;&#x27;) # lembre-se do shift+tab para demais parâmetros
+
+df_excel.head()</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7b0f698f-2eda-41d3-bd77-f54785a78479" class="code"><code class="language-Python">import pandas as pd
+
+# Carrega dados de uma URL (por exemplo, um arquivo CSV de uma plataforma como o Kaggle)
+url_csv = &quot;https://site.com/arquivo.csv&quot;
+df_url = pd.read_csv(url_csv)
+
+df_url.head()</code></pre><p id="63fc3f5b-c44c-455d-a996-9b1d657daca8" class=""><strong><mark class="highlight-blue">R</mark></strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3e9c46cc-691f-4a65-a41f-e6f07639a081" class="code"><code class="language-R"># Biblioteca readr
+library(readr)
+
+# Carrega os dados de um arquivo CSV
+df_csv &lt;- read_csv(&#x27;arquivo.csv&#x27;)
+
+head(df_csv)</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6ed62d28-d049-4ead-96f7-5cf14dd62d39" class="code"><code class="language-R"># Biblioteca readxl
+library(readxl)
+
+# Carrega os dados de uma planilha Excel
+df_excel &lt;- read_excel(&#x27;arquivo.xlsx&#x27;)
+
+head(df_excel)</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="702ab8a5-dccb-4f50-b054-6aea77718cfe" class="code"><code class="language-R"># Biblioteca readr
+library(readr)
+
+# Definindo a URL do arquivo CSV
+url_csv &lt;- &quot;https://site.com/arquivo.csv&quot;
+
+# Carregando dados do CSV a partir da URL
+df_url &lt;- read_csv(url_csv)
+
+head(df_url)</code></pre></details></li></ul><ul id="f9821fff-565c-498b-9b6e-e73a56fd1a17" class="toggle"><li><details open=""><summary><strong>Base de Dados de Um Banco de Dados (NoSQL)</strong></summary><p id="625abfd6-e12e-4d1e-a9ec-c5a137fe7819" class=""><strong><mark class="highlight-orange">Python</mark></strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8641a889-b267-46c1-bc45-0842e6f88eab" class="code"><code class="language-Python">import pymongo
+
+# Configuração da conexão
+client = pymongo.MongoClient(&#x27;localhost&#x27;, 27017)
+db = client[&#x27;nome_do_banco&#x27;]
+collection = db[&#x27;nome_da_colecao&#x27;]
+
+# Consulta para obter dados
+cursor = collection.find()
+df_mongo = pd.DataFrame(list(cursor))
+
+df_mongo.head()</code></pre><p id="159ca73b-13d8-4de0-94ad-3a09bc1e1f17" class=""><strong><mark class="highlight-blue">R</mark></strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="23b3745e-44d7-4ced-b823-70185b401f0b" class="code"><code class="language-R"># Biblioteca mongolite
+library(mongolite)
+
+# Configuração da conexão
+con &lt;- mongo(collection = &quot;nome_da_colecao&quot;, db = &quot;nome_do_banco&quot;, url = &quot;mongodb://localhost:27017&quot;)
+
+# Consulta para obter dados
+df_mongo &lt;- con$find()
+
+head(df_mongo)</code></pre></details></li></ul><ul id="eddf61cc-d34f-42b4-aded-05e0cdce00f2" class="toggle"><li><details open=""><summary><strong>Base de Dados de Banco Estruturado (SQL)</strong></summary><p id="74faff83-4835-41cb-bac4-9a7aaa2b4c2b" class=""><strong><mark class="highlight-orange">Python</mark></strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="13d8219b-04a8-4310-bbeb-77e42a13e8a4" class="code"><code class="language-Python">import pandas as pd
+import mysql.connector
+
+# Configuração da conexão
+db_config = {
+    &#x27;user&#x27;: &#x27;seu_usuario&#x27;,
+    &#x27;password&#x27;: &#x27;sua_senha&#x27;,
+    &#x27;host&#x27;: &#x27;localhost&#x27;,
+    &#x27;database&#x27;: &#x27;nome_do_banco&#x27;
+}
+
+# Conectando ao banco de dados
+conn = mysql.connector.connect(**db_config)
+
+# Consulta SQL para obter dados
+query = &quot;SELECT * FROM tabela&quot;
+df = pd.read_sql(query, conn)
+
+# Fecha a conexão
+conn.close()
+
+df.head()</code></pre><p id="9095c3a8-426f-4403-8480-c1ea59690839" class=""><mark class="highlight-blue"><strong>R</strong></mark></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="dbd82691-9a30-494d-b8c0-96aac913b246" class="code"><code class="language-R"># Bibliotecas necessárias
+library(DBI)
+library(RMySQL)
+
+# Configuração da conexão
+db_config &lt;- list(
+  dbname = &#x27;nome_do_banco&#x27;,
+  user = &#x27;seu_usuario&#x27;,
+  password = &#x27;sua_senha&#x27;,
+  host = &#x27;localhost&#x27;
+)
+
+# Conectando ao banco de dados
+conn &lt;- dbConnect(RMySQL::MySQL(), dbname = db_config$dbname,
+                  user = db_config$user, password = db_config$password,
+                  host = db_config$host)
+
+# Consulta SQL para obter dados
+query &lt;- &quot;SELECT * FROM tabela&quot;
+df &lt;- dbGetQuery(conn, query)
+
+# Fecha a conexão
+dbDisconnect(conn)
+
+head(df)</code></pre></details></li></ul><ul id="75f7d627-1835-4671-895e-281cb6435510" class="toggle"><li><details open=""><summary><strong>Base em Banco em formato JSON</strong></summary><p id="b282c00e-e8ae-4bcd-b114-4aeebc333e67" class=""><strong><mark class="highlight-orange">Python</mark></strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="42c0089f-696b-4c7c-b463-79532fe328b4" class="code"><code class="language-Python">import pandas as pd
+
+# Carregando dados de um arquivo JSON
+df_json = pd.read_json(&#x27;arquivo.json&#x27;)
+
+df_json.head()</code></pre><p id="ab58a3ef-3dbd-4441-ab7a-19b9d66420eb" class=""><mark class="highlight-blue"><strong>R</strong></mark></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4dd1c31d-abf8-442f-b958-e32a5e2c0fc6" class="code"><code class="language-R"># Carregar a biblioteca jsonlite
+library(jsonlite)
+
+# Carregando dados de um arquivo JSON
+df_json &lt;- fromJSON(&#x27;arquivo.json&#x27;)
+
+# Visualizar as primeiras linhas do DataFrame
+head(df_json)</code></pre></details></li></ul><ul id="910c9b34-5f3b-4e79-9e97-1c727d647239" class="toggle"><li><details open=""><summary><strong>Base de Dados Através de APIs</strong></summary><p id="2ab1ab7a-2cf9-4190-bcee-e91c92bf533b" class="">Nesse modelo, além do acesso via API você também vai notar que o <em>DataFrame</em> e a inserção dos dados foram gerados através de queries SQL, o que acho muito bacana nessas linguagens, porque a sintaxe é exatamente a mesma.</p><p id="c98d58d9-c856-44bb-a76a-caf139a64fd7" class=""><strong><mark class="highlight-orange">Python</mark></strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="73f65987-28fb-4227-a072-176aabd2e35c" class="code"><code class="language-Python">import requests
+import sqlite3
+
+# URL da API do IBGE
+url_ibge = &quot;https://servicodados.ibge.gov.br/api/v3/agregados/7392/periodos/2014/variaveis/10484?localidades=N1[all]&quot;
+
+# Fazendo a requisição à API do IBGE
+response = requests.get(url_ibge)
+dados_ibge = response.json()
+
+# Conectando ao banco de dados SQLite (o arquivo &#x27;dados_ibge.db&#x27; será criado no diretório atual)
+conn = sqlite3.connect(&#x27;dados_ibge.db&#x27;)
+cursor = conn.cursor()
+
+# Criando a tabela para armazenar os dados (se ainda não existir)
+cursor.execute(&#x27;&#x27;&#x27;
+CREATE TABLE IF NOT EXISTS dados_ibge (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    categoria TEXT,
+    unidade TEXT,
+    valor REAL
+)
+&#x27;&#x27;&#x27;)
+
+# Inserindo os dados na tabela
+for item in dados_ibge[0][&#x27;resultados&#x27;][0][&#x27;series&#x27;]:
+    categoria = item[&#x27;categoria&#x27;][&#x27;nome&#x27;]
+    unidade = item[&#x27;unidade&#x27;][&#x27;nome&#x27;]
+    valor = item[&#x27;serie&#x27;][&#x27;2014&#x27;]
+
+    cursor.execute(&#x27;&#x27;&#x27;
+    INSERT INTO dados_ibge (categoria, unidade, valor) VALUES (?, ?, ?)
+    &#x27;&#x27;&#x27;, (categoria, unidade, valor))
+
+# Salvando as alterações e fechando a conexão com o banco de dados
+conn.commit()
+conn.close()
+
+print(&quot;Dados carregados com sucesso no banco de dados SQLite.&quot;)</code></pre><p id="71e088d3-f04f-4ec7-a2fe-9b8821c79c50" class=""><mark class="highlight-blue"><strong>R</strong></mark></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c1e554b-fdc1-455f-b1f9-587b63cc104e" class="code"><code class="language-R"># Bibliotecas necessárias
+library(httr)
+library(jsonlite)
+library(DBI)
+library(RSQLite)
+
+# URL da API, neste exemplo, a do IBGE
+url_ibge &lt;- &quot;https://servicodados.ibge.gov.br/api/v3/agregados/7392/periodos/2014/variaveis/10484?localidades=N1[all]&quot;
+
+# Fazendo a requisição à API
+response &lt;- GET(url_ibge)
+dados_ibge &lt;- content(response, &quot;parsed&quot;)
+
+# Conexão com o banco de dados SQLite (o arquivo .db será criado no diretório atual)
+conn &lt;- dbConnect(RSQLite::SQLite(), dbname = &quot;dados_ibge.db&quot;)
+
+# Criando a tabela para armazenar os dados (se ainda não existir)
+dbExecute(conn, &quot;CREATE TABLE IF NOT EXISTS dados_ibge (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    categoria TEXT,
+    unidade TEXT,
+    valor REAL
+)&quot;)
+
+# Inserindo os dados na tabela
+for (item in dados_ibge[[1]]$resultados[[1]]$series) {
+  categoria &lt;- item$categoria$nome
+  unidade &lt;- item$unidade$nome
+  valor &lt;- item$serie$`2014`
+  
+  dbExecute(conn, &quot;INSERT INTO dados_ibge (categoria, unidade, valor) VALUES (?, ?, ?)&quot;, params = list(categoria, unidade, valor))
+}
+
+# Salvando as alterações e fechando a conexão com o banco de dados
+dbDisconnect(conn)
+
+print(&quot;Dados carregados com sucesso no banco de dados SQLite.&quot;)
+</code></pre></details></li></ul><ul id="3de1856e-0f68-47d8-aaf0-280bae5f9156" class="toggle"><li><details open=""><summary><strong>Base de dados em um Bucket S3 da Amazon</strong></summary><p id="d1d9a9dd-a2fc-49c5-acc5-7cbc453193b7" class=""><strong><mark class="highlight-orange">Python</mark></strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="14ca522d-3dfb-4143-992f-497bdde2a90c" class="code"><code class="language-Python">import boto3
+import pandas as pd
+from io import StringIO
+
+# Inicializando o cliente S3
+s3_client = boto3.client(&#x27;s3&#x27;, aws_access_key_id=&#x27;SUA_AWS_ACCESS_KEY_ID&#x27;, 
+                         aws_secret_access_key=&#x27;SUA_AWS_SECRET_ACCESS_KEY&#x27;)
+
+# Nome do bucket e chave do arquivo no S3
+bucket_name = &#x27;seu-bucket-s3&#x27;
+file_key = &#x27;caminho/do/seu/arquivo.csv&#x27;
+
+# Obtendo o objeto do S3
+obj = s3_client.get_object(Bucket=bucket_name, Key=file_key)
+data = obj[&#x27;Body&#x27;].read().decode(&#x27;utf-8&#x27;)
+
+# Carregando os dados em um DataFrame
+df_s3 = pd.read_csv(StringIO(data))
+
+df_s3.head()</code></pre><p id="f928d956-0b45-47ff-8b64-7a083d744a51" class=""><mark class="highlight-blue"><strong>R</strong></mark></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ca78a616-7d3b-4736-9ba7-34d5e8cc934a" class="code"><code class="language-R"># Carregar as bibliotecas necessárias
+library(aws.s3)
+library(readr)
+
+# Configuração das credenciais do S3
+Sys.setenv(&quot;AWS_ACCESS_KEY_ID&quot; = &quot;SUA_AWS_ACCESS_KEY_ID&quot;,
+           &quot;AWS_SECRET_ACCESS_KEY&quot; = &quot;SUA_AWS_SECRET_ACCESS_KEY&quot;,
+           &quot;AWS_DEFAULT_REGION&quot; = &quot;sua_região_aws&quot;)
+
+# Nome do bucket e chave do arquivo no S3
+bucket_name &lt;- &#x27;seu-bucket-s3&#x27;
+file_key &lt;- &#x27;caminho/do/seu/arquivo.csv&#x27;
+
+# Obtendo o objeto do S3
+obj &lt;- get_object(object = file_key, bucket = bucket_name, parse = FALSE)
+
+# Carregando os dados em um DataFrame
+df_s3 &lt;- read_csv(rawToChar(obj))
+
+# Visualizar as primeiras linhas do DataFrame
+head(df_s3)
+</code></pre></details></li></ul><ul id="88e3d25c-84db-4265-97dc-fe53128fc3ef" class="toggle"><li><details open=""><summary><strong>Base de Dados da Azure</strong></summary><p id="f7644aee-9968-496f-a900-4fdd06ffeed3" class=""><strong><mark class="highlight-orange">Python</mark></strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e2126aa4-e894-4bc9-b9a2-bb2d6ebc7e08" class="code"><code class="language-Python">from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+import pandas as pd
+from io import BytesIO
+
+# Conexão com o Azure Blob Storage
+connect_str = &#x27;SUA_STRING_DE_CONEXÃO_AZURE&#x27;
+blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+
+# Nome do container e nome do blob
+container_name = &#x27;seu-container&#x27;
+blob_name = &#x27;caminho/do/seu/arquivo.csv&#x27;
+
+# Obtendo o blob
+blob_client = blob_service_client.get_blob_client(container=container_name, 
+                                                  blob=blob_name)
+stream = blob_client.download_blob()
+data = stream.readall()
+
+# Carregando os dados em um DataFrame
+df_azure = pd.read_csv(BytesIO(data))
+
+df_azure.head()</code></pre><p id="7ab24610-b102-487a-95cd-4b48fb805f01" class=""><mark class="highlight-blue"><strong>R</strong></mark></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a4a962bc-5277-480d-9a8e-5a1a34528816" class="code"><code class="language-R"># Bibliotecas necessárias
+library(azureStorageBlob)
+library(readr)
+
+# Conexão com o Azure Blob Storage
+connect_str &lt;- &#x27;SUA_STRING_DE_CONEXÃO_AZURE&#x27;
+container_name &lt;- &#x27;seu-container&#x27;
+blob_name &lt;- &#x27;caminho/do/seu/arquivo.csv&#x27;
+
+# Criar objeto de contexto de armazenamento
+context &lt;- storage_context(account = &quot;nome_da_conta_azure&quot;, key = &quot;sua_chave_de_acesso&quot;)
+
+# Ler o blob e criar um data frame
+blob &lt;- storage_blob_download(context, container = container_name, blob = blob_name)
+df_azure &lt;- read_csv(blob$content, col_names = TRUE)
+
+# Visualizar as primeiras linhas do DataFrame
+head(df_azure)
+</code></pre><p id="6719b94c-3d75-4da7-b341-9d69ad44c4e2" class="">
+</p></details></li></ul><p id="ff990c7d-bb2e-41ef-ac68-b3a382e8dbad" class="">Espero de coração que esses modelos lhe ajudem a otimizar seu tempo. Não sei se conhecia esta plataforma <strong><em>Notion</em></strong>, ela tem me ajudado demais a organizar não só meus projetos, mas também meus estudo, agendas, praticamente faço tudo por aqui.</p><p id="2701838b-7b69-474e-9e7c-6d89682ffefb" class="">Essa é a primeira vez que compartilho alguma informação diretamente do Notion, acaba que é também um piloto para futuros projetos.</p><p id="36a73c36-cb60-4051-be22-fd1c24630845" class="">Até mais!!!</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
